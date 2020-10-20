@@ -49,31 +49,37 @@ function addZero(n) {
 // Set Background and Greeting
 function setBgGreet() {
   let today = new Date(),
-    hour = today.getHours();
+    hour = today.getHours(),
+    randomImgUrl = `${addZero(randomInteger(1, 19))}.jpg`
 
   if (hour < 12 && hour >= 6) {
     // Morning
     document.body.style.backgroundImage =
-      "url('https://i.ibb.co/7vDLJFb/morning.jpg')";
+      `url('assets/images/morning/${randomImgUrl}.jpg')`;
     greeting.textContent = 'Good Morning, ';
+
   } else if (hour >= 12 && hour < 18) {
     // Afternoon
     document.body.style.backgroundImage =
-      "url('https://i.ibb.co/3mThcXc/afternoon.jpg')";
+      `url('assets/images/day/${randomImgUrl}.jpg')`;
     greeting.textContent = 'Good Afternoon, ';
+
   } else if (hour >= 18 && hour < 24){
     // Evening
     document.body.style.backgroundImage =
-      "url('https://i.ibb.co/924T2Wv/night.jpg')";
+      `url('assets/images/evening/${randomImgUrl}')`;
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = 'white';
+
   } else if (hour < 6){
     // Night
     document.body.style.backgroundImage =
-    "url('https://i.ibb.co/924T2Wv/night.jpg')";
-  greeting.textContent = 'Good Evening, ';
-  document.body.style.color = 'white';
+      `url('assets/images/night/${randomImgUrl}.jpg')`;
+    greeting.textContent = 'Good Night, ';
+    document.body.style.color = 'white';
   }
+
+  setTimeout(setBgGreet, 60000)
 }
 
 // Get Name
@@ -135,7 +141,7 @@ async function getQuote(){
 
 function showQuote(quotes){
   quote.innerHTML = quotes[randomInteger(0, quotes.length - 1)]['text'];
-  setTimeout(showQuote, 10000, quotes)
+  setTimeout(showQuote, 60000, quotes)
 }
 
 function randomInteger(min, max) {
@@ -152,7 +158,7 @@ focus.addEventListener('blur', setFocus);
 // Run
 showTime();
 getQuote();
-showDate();//NEW
+showDate();
 setBgGreet();
 getName();
 getFocus();
