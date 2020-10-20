@@ -79,7 +79,7 @@ function setBgGreet() {
   }
   document.body.style.backgroundPosition = 'center';
   
-  setTimeout(setBgGreet, 60000)
+  setTimeout(setBgGreet, 1000)
 }
 
 // Get Name
@@ -140,7 +140,7 @@ async function getQuote(){
 
 function showQuote(quotes){
   quote.innerHTML = quotes[randomInteger(0, quotes.length - 1)]['text'];
-  setTimeout(showQuote, 60000, quotes)
+  setTimeout(showQuote, 100, quotes)
 }
 
 function randomInteger(min, max) {
