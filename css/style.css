@@ -2,6 +2,7 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  text-shadow: 1px 1px #000000;
 }
 
 body {
@@ -18,7 +19,6 @@ body {
 
 .time {
   font-size: 12rem;
-  font-weight: 200;
   text-shadow: 3px 3px #000000;
 }
 
@@ -26,6 +26,13 @@ body {
   font-size: 3rem;
   font-weight: 200;
   text-shadow: 1.5px 1.5px #000000;
+  opacity: 0.8;
+}
+
+.weather{
+  display: flex;
+  column-gap: 1rem;
+  align-items: center;
 }
 
 h1 {

@@ -3,11 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="css/owfont-regular.css">
     <link
       href="https://fonts.googleapis.com/css2?family=Open+Sans+Condensed:ital,wght@0,300;0,700;1,300&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="css/style.css" />
     <link
       rel="stylesheet"
       href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
@@ -19,9 +20,18 @@
       integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
       crossorigin="anonymous"
     ></script>
-    <title>momentum</title>
+    <title>Momentum</title>
   </head>
   <body>
+    <div class="weather">
+      <div>
+        <i class="weather-icon owf"></i>
+        <div class="temperature"></div>
+      </div>
+      <div class="weather-description"></div>
+      <span>in</span>
+      <div class="city" contenteditable="true">Samara</div>
+    </div>
     <time class="date"></time>
     <time class="time"></time>
     <h1>
@@ -30,7 +40,7 @@
     </h1>
     <h2>What Is Your Focus For Today?</h2>
     <h2 class="focus" contenteditable="true"></h2>
-    <blockquote class="quote"></blockquote>
+    <blockquote class="blockquote quote"></blockquote>
     <script src="script.js"></script>
   </body>
 </html>

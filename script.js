@@ -55,13 +55,13 @@ function setBgGreet() {
   if (hour < 12 && hour >= 6) {
     // Morning
     document.body.style.backgroundImage =
-      `url('assets/images/morning/${randomImgUrl}.jpg')`;
+      `url('assets/images/morning/${randomImgUrl}'), center`;
     greeting.textContent = 'Good Morning, ';
 
   } else if (hour >= 12 && hour < 18) {
     // Afternoon
     document.body.style.backgroundImage =
-      `url('assets/images/day/${randomImgUrl}.jpg')`;
+      `url('assets/images/day/${randomImgUrl}'), center`;
     greeting.textContent = 'Good Afternoon, ';
 
   } else if (hour >= 18 && hour < 24){
@@ -73,12 +73,12 @@ function setBgGreet() {
 
   } else if (hour < 6){
     // Night
-    document.body.style.backgroundImage =
-      `url('assets/images/night/${randomImgUrl}.jpg')`;
+    `url('assets/images/night/${randomImgUrl}'), center`;
     greeting.textContent = 'Good Night, ';
     document.body.style.color = 'white';
   }
-
+  document.body.style.backgroundPosition = 'center';
+  
   setTimeout(setBgGreet, 60000)
 }
 
@@ -133,7 +133,6 @@ async function getQuote(){
   const url = `https://type.fit/api/quotes`;
   const res = await fetch(url);
   const quotes = await res.json();
-  console.log(quotes);
   showQuote(quotes);
 }
 
@@ -150,6 +149,33 @@ function randomInteger(min, max) {
   return Math.floor(rand);
 }
 
+// Get wether
+const weatherIcon = document.querySelector('.weather-icon');
+const city = document.querySelector('.city');
+const temperature = document.querySelector('.temperature');
+const weatherDescription = document.querySelector('.weather-description');
+
+async function getWeather() {  
+  const url = `https://api.openweathermap.org/data/2.5/weather?q=${city.textContent}&lang=en&apikey=7a1102cde77d59543b4f3913072bc6e9&units=metric`;
+  const res = await fetch(url);
+  const data = await res.json();
+
+  weatherIcon.className = 'weather-icon owf';
+  weatherIcon.classList.add(`owf-${data.weather[0].id}`);
+  temperature.textContent = `${data.main.temp}°C`;
+  weatherDescription.textContent = data.weather[0].description;
+}
+
+function setCity(event) {
+  if (event.code === 'Enter') {
+    getWeather();
+    city.blur();
+  }
+}
+
+document.addEventListener('DOMContentLoaded', getWeather);
+city.addEventListener('keypress', setCity);
+
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
 focus.addEventListener('keypress', setFocus);
@@ -158,6 +184,7 @@ focus.addEventListener('blur', setFocus);
 // Run
 showTime();
 getQuote();
+getWeather()
 showDate();
 setBgGreet();
 getName();
