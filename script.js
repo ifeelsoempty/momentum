@@ -4,7 +4,10 @@ const time = document.querySelector('.time'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
   focus = document.querySelector('.focus');
-  quote = document.querySelector('.quote');
+  blockquote = document.querySelector('.quote');
+  quote = document.querySelector('.quote q');
+  author = document.querySelector('.quote footer cite');
+  bgBtn = document.querySelector('.change-bg-btn');
 
 // Show Time
 function showTime() {
@@ -48,38 +51,38 @@ function addZero(n) {
 
 // Set Background and Greeting
 function setBgGreet() {
+  document.body.style.backgroundImage = 'url("../assets/images/overlay.png")';
   let today = new Date(),
     hour = today.getHours(),
     randomImgUrl = `${addZero(randomInteger(1, 19))}.jpg`
-
   if (hour < 12 && hour >= 6) {
     // Morning
-    document.body.style.backgroundImage =
-      `url('assets/images/morning/${randomImgUrl}'), center`;
+    document.body.style.backgroundImage +=
+      `,url('assets/images/morning/${randomImgUrl}')`;
     greeting.textContent = 'Good Morning, ';
 
   } else if (hour >= 12 && hour < 18) {
     // Afternoon
-    document.body.style.backgroundImage =
-      `url('assets/images/day/${randomImgUrl}'), center`;
+    document.body.style.backgroundImage +=
+      `,url('assets/images/day/${randomImgUrl}')`;
     greeting.textContent = 'Good Afternoon, ';
 
   } else if (hour >= 18 && hour < 24){
     // Evening
-    document.body.style.backgroundImage =
-      `url('assets/images/evening/${randomImgUrl}')`;
+    document.body.style.backgroundImage +=
+      `,url('assets/images/evening/${randomImgUrl}')`;
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = 'white';
 
   } else if (hour < 6){
     // Night
-    `url('assets/images/night/${randomImgUrl}'), center`;
+    `,url('assets/images/night/${randomImgUrl}')`;
     greeting.textContent = 'Good Night, ';
     document.body.style.color = 'white';
   }
   document.body.style.backgroundPosition = 'center';
-  
-  setTimeout(setBgGreet, 1000)
+
+  setTimeout(setBgGreet, 600000)
 }
 
 // Get Name
@@ -127,20 +130,21 @@ function setFocus(e) {
 }
 
 // Get Quote
-const quotes = '';
 
 async function getQuote(){
   const url = `https://type.fit/api/quotes`;
   const res = await fetch(url);
-  const quotes = await res.json();
+  quotes = await res.json();
+  console.log(quotes);
+  blockquote.addEventListener('click', showQuote);
   showQuote(quotes);
 }
 
 // Show Quote 
-
-function showQuote(quotes){
-  quote.innerHTML = quotes[randomInteger(0, quotes.length - 1)]['text'];
-  setTimeout(showQuote, 100, quotes)
+function showQuote(){
+  const randomQuote = quotes[randomInteger(0, quotes.length - 1)];
+  quote.innerHTML = ` ${randomQuote['text']} `;
+  author.innerHTML = randomQuote['author'] ? `- ${randomQuote['author']}` : '- Unknown';
 }
 
 function randomInteger(min, max) {
@@ -163,7 +167,7 @@ async function getWeather() {
   weatherIcon.className = 'weather-icon owf';
   weatherIcon.classList.add(`owf-${data.weather[0].id}`);
   temperature.textContent = `${data.main.temp}°C`;
-  weatherDescription.textContent = data.weather[0].description;
+  weatherDescription.textContent = data.weather[0].description.charAt(0).toUpperCase() + data.weather[0].description.slice(1);
 }
 
 function setCity(event) {
@@ -175,6 +179,7 @@ function setCity(event) {
 
 document.addEventListener('DOMContentLoaded', getWeather);
 city.addEventListener('keypress', setCity);
+bgBtn.addEventListener('click', setBgGreet);
 
 name.addEventListener('keypress', setName);
 name.addEventListener('blur', setName);
