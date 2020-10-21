@@ -46,12 +46,13 @@ function getStrMonth(date){
 
 // Add Zeros
 function addZero(n) {
+  // ПОФИКСИТЬ ЕБАНЫЙ НОЛЬ //
   return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
 // Set Background and Greeting
 function setBgGreet() {
-  document.body.style.backgroundImage = 'url("../assets/images/overlay.png")';
+  document.body.style.backgroundImage = 'url("assets/images/overlay.png")';
   let today = new Date(),
     hour = today.getHours(),
     randomImgUrl = `${addZero(randomInteger(1, 19))}.jpg`
@@ -74,8 +75,9 @@ function setBgGreet() {
     greeting.textContent = 'Good Evening, ';
     document.body.style.color = 'white';
 
-  } else if (hour < 6){
+  } else if (hour >= 24 || hour < 6){
     // Night
+    document.body.style.backgroundImage +=
     `,url('assets/images/night/${randomImgUrl}')`;
     greeting.textContent = 'Good Night, ';
     document.body.style.color = 'white';
@@ -135,7 +137,6 @@ async function getQuote(){
   const url = `https://type.fit/api/quotes`;
   const res = await fetch(url);
   quotes = await res.json();
-  console.log(quotes);
   blockquote.addEventListener('click', showQuote);
   showQuote(quotes);
 }
