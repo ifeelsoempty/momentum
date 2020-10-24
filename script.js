@@ -4,9 +4,9 @@ const time = document.querySelector('.time'),
   greeting = document.querySelector('.greeting'),
   name = document.querySelector('.name'),
   focus = document.querySelector('.focus');
-  blockquote = document.querySelector('.quote');
-  quote = document.querySelector('.quote q');
-  author = document.querySelector('.quote footer cite');
+  blockquote = document.querySelector('.blockquote');
+  quote = document.querySelector('.quote');
+  author = document.querySelector('.blockquote footer cite');
   bgBtn = document.querySelector('.change-bg-btn');
 
 // ПОФИКСИТЬ ЕБАНЫЙ НОЛЬ
@@ -54,10 +54,10 @@ function addZero(n) {
 }
 
 // Set Background and Greeting
-let timestamp = Math.floor(Date.now() / 1000) - 1;
+let timestamp = Math.floor(Date.now() / 1000) - 2;
 
 function setBgGreet() {
-  if((timestamp + 1) <= Math.floor(Date.now() / 1000)){
+  if((timestamp + 2) <= Math.floor(Date.now() / 1000)){
     let today = new Date(),
     hour = today.getHours(),
     randomImgUrl = `${addZero(randomInteger(1, 19))}.jpg`
@@ -94,7 +94,7 @@ function setBgGreet() {
 // Get Name
 function getName() {
   if (!localStorage.getItem('name')) {
-    name.textContent = '[Enter Name]';
+    name.textContent = '';
   } else {
     name.textContent = localStorage.getItem('name');
   }
@@ -104,20 +104,38 @@ function getName() {
 function setName(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
-    if ((e.which == 13 || e.keyCode == 13)) {
-      localStorage.setItem('name', e.target.innerText);
+    if (e.which == 13 || e.keyCode == 13) {
+      if(e.target.innerText == ""){
+        if(localStorage.getItem('name') == null){
+          name.textContent = '';
+          name.blur();
+        }else{
+            name.textContent = localStorage.getItem('name')
+           name.blur();
+        }
 
-      name.blur();
+      }else{
+        localStorage.setItem('name', e.target.innerText);
+        name.blur();
+      }
     }
   } else {
-    localStorage.setItem('name', e.target.innerText);
+    if(e.target.innerText == ""){
+      if(localStorage.getItem('name') == null){
+        name.textContent = '';
+      }else{
+        name.textContent = localStorage.getItem('name')
+      }
+    }else{
+      localStorage.setItem('name', e.target.innerText);
+    }
   }
 }
 
 // Get Focus
 function getFocus() {
-  if (localStorage.getItem('focus') === null) {
-    focus.textContent = '[Enter Focus]';
+  if (!localStorage.getItem('focus')) {
+    focus.textContent = '';
   } else {
     focus.textContent = localStorage.getItem('focus');
   }
@@ -128,14 +146,32 @@ function setFocus(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
     if (e.which == 13 || e.keyCode == 13) {
-      localStorage.setItem('focus', e.target.innerText);
-      focus.blur();
+      if(e.target.innerText == ""){
+        if(localStorage.getItem('focus') == null){
+          focus.textContent = '';
+          focus.blur();
+        }else{
+          focus.textContent = localStorage.getItem('focus')
+          focus.blur();
+        }
+
+      }else{
+        localStorage.setItem('focus', e.target.innerText);
+        focus.blur();
+      }
     }
   } else {
-    localStorage.setItem('focus', e.target.innerText);
+    if(e.target.innerText == ""){
+      if(localStorage.getItem('focus') == null){
+        focus.textContent = '';
+      }else{
+        focus.textContent = localStorage.getItem('focus')
+      }
+    }else{
+      localStorage.setItem('focus', e.target.innerText);
+    }
   }
 }
-
 // Get Quote
 
 async function getQuote(){
@@ -179,7 +215,16 @@ async function getWeather() {
 function setCity(event) {
   if (event.code === 'Enter') {
     getWeather();
+    localStorage.setItem('city', event.target.innerText)
     city.blur();
+  }
+}
+
+function getCity(){
+  if (!localStorage.getItem('city')) {
+    city.textContent = 'Moscow';
+  } else {
+    city.textContent = localStorage.getItem('city');
   }
 }
 
@@ -195,7 +240,8 @@ focus.addEventListener('blur', setFocus);
 // Run
 showTime();
 getQuote();
-getWeather()
+getWeather();
+getCity();
 showDate();
 setBgGreet();
 setInterval(setBgGreet, 60000);
