@@ -6,17 +6,13 @@
 
 body {
   font-family: "Quicksand", sans-serif;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  height: 100vh;
   background-size: cover;
   background-repeat: no-repeat;
-  transition: background 1s ease-in-out;
-  transition-delay: 0.3s;
-  color: #000000;
+  -webkit-transition: background-image 0.5s ease-in-out;
+  transition: background-image 0.5s ease-in-out;
+  background-position: fixed;
+  color: #ffffff;
+  text-align: center;
 }
 
 .time {
@@ -38,6 +34,16 @@ body {
   bottom: 5vh;
 }
 
+.container {
+  margin: 0 auto;
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+}
+
 .change-bg-btn:hover {
   opacity: 0.8;
   background: #fff;
@@ -45,9 +51,10 @@ body {
 }
 
 .quote {
-  width: 300px;
+  width: 320px;
   letter-spacing: 0.06rem;
-  position: relative;
+  position: absolute;
+  top: 70vh;
   cursor: pointer;
   user-select: none;
 }

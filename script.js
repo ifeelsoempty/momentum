@@ -9,6 +9,10 @@ const time = document.querySelector('.time'),
   author = document.querySelector('.quote footer cite');
   bgBtn = document.querySelector('.change-bg-btn');
 
+// ПОФИКСИТЬ ЕБАНЫЙ НОЛЬ
+// ЭФФЕКТ РАЗМЫТОСТИ ИЛИ КОНТРАСТНОСТИ 
+// ИНПУТЫ ДОДЕЛАТЬ
+
 // Show Time
 function showTime() {
   let today = new Date(),
@@ -46,50 +50,50 @@ function getStrMonth(date){
 
 // Add Zeros
 function addZero(n) {
-  // ПОФИКСИТЬ ЕБАНЫЙ НОЛЬ //
   return (parseInt(n, 10) < 10 ? '0' : '') + n;
 }
 
 // Set Background and Greeting
+let timestamp = Math.floor(Date.now() / 1000)
+
 function setBgGreet() {
-  document.body.style.backgroundImage = 'url("assets/images/overlay.png")';
-  let today = new Date(),
+  if((timestamp + 1) <= Math.floor(Date.now() / 1000)){
+    let today = new Date(),
     hour = today.getHours(),
     randomImgUrl = `${addZero(randomInteger(1, 19))}.jpg`
-  if (hour < 12 && hour >= 6) {
-    // Morning
-    document.body.style.backgroundImage +=
-      `,url('assets/images/morning/${randomImgUrl}')`;
-    greeting.textContent = 'Good Morning, ';
+    document.body.style.backgroundImage = 'url("../assets/images/overlay.png")';
+    if (hour < 12 && hour >= 6) {
+      // Morning
+      document.body.style.backgroundImage +=
+        `,url('assets/images/morning/${randomImgUrl}')`;
+      greeting.textContent = 'Good Morning, ';
 
-  } else if (hour >= 12 && hour < 18) {
-    // Afternoon
-    document.body.style.backgroundImage +=
-      `,url('assets/images/day/${randomImgUrl}')`;
-    greeting.textContent = 'Good Afternoon, ';
+    } else if (hour >= 12 && hour < 18) {
+      // Afternoon
+      document.body.style.backgroundImage +=
+        `,url('assets/images/day/${randomImgUrl}')`;
+      greeting.textContent = 'Good Afternoon, ';
 
-  } else if (hour >= 18 && hour < 24){
-    // Evening
-    document.body.style.backgroundImage +=
-      `,url('assets/images/evening/${randomImgUrl}')`;
-    greeting.textContent = 'Good Evening, ';
-    document.body.style.color = 'white';
+    } else if (hour >= 18 && hour < 24){
+      // Evening
+      document.body.style.backgroundImage +=
+        `,url('assets/images/evening/${randomImgUrl}')`;
+      greeting.textContent = 'Good Evening, ';
 
-  } else if (hour >= 24 || hour < 6){
-    // Night
-    document.body.style.backgroundImage +=
-    `,url('assets/images/night/${randomImgUrl}')`;
-    greeting.textContent = 'Good Night, ';
-    document.body.style.color = 'white';
+    } else if (hour >= 24 || hour < 6){
+      // Night
+      document.body.style.backgroundImage +=
+      `,url('assets/images/night/${randomImgUrl}')`;
+      greeting.textContent = 'Good Night, ';
+    }
+    document.body.style.backgroundPosition = 'center';
+    timestamp = Math.floor(Date.now() / 1000);
   }
-  document.body.style.backgroundPosition = 'center';
-
-  setTimeout(setBgGreet, 600000)
 }
 
 // Get Name
 function getName() {
-  if (localStorage.getItem('name') === null) {
+  if (!localStorage.getItem('name')) {
     name.textContent = '[Enter Name]';
   } else {
     name.textContent = localStorage.getItem('name');
@@ -100,8 +104,9 @@ function getName() {
 function setName(e) {
   if (e.type === 'keypress') {
     // Make sure enter is pressed
-    if (e.which == 13 || e.keyCode == 13) {
+    if ((e.which == 13 || e.keyCode == 13)) {
       localStorage.setItem('name', e.target.innerText);
+
       name.blur();
     }
   } else {
@@ -193,5 +198,6 @@ getQuote();
 getWeather()
 showDate();
 setBgGreet();
+setInterval(setBgGreet, 60000);
 getName();
 getFocus();
