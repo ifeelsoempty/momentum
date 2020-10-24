@@ -54,7 +54,7 @@ function addZero(n) {
 }
 
 // Set Background and Greeting
-let timestamp = Math.floor(Date.now() / 1000)
+let timestamp = Math.floor(Date.now() / 1000) - 1;
 
 function setBgGreet() {
   if((timestamp + 1) <= Math.floor(Date.now() / 1000)){
