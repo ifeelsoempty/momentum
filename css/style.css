@@ -11,6 +11,7 @@ body {
   -webkit-transition: background-image 1s ease-in-out;
   transition: background-image 1s ease-in-out;
   background-position: fixed;
+  transition-delay: 1s;
   color: #ffffff;
   text-align: center;
 }
